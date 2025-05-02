@@ -288,4 +288,25 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("save-edits-button").click();
       }
     });
+
+  // Toggle Saved Occasions section
+  const toggleOccasions = document.getElementById("toggle-occasions");
+  const occasionList = document.getElementById("occasion-list");
+  let occasionsVisible = true;
+
+  toggleOccasions.addEventListener("click", function () {
+    occasionsVisible = !occasionsVisible;
+    occasionList.style.display = occasionsVisible ? "block" : "none";
+    // Optionally, change the header text or style to indicate state
+    toggleOccasions.textContent = occasionsVisible
+      ? "Saved Occasions"
+      : "Show Saved Occasions";
+  });
+
+  // Hide Packing List section with X button
+  document
+    .getElementById("hide-packing-list")
+    .addEventListener("click", function () {
+      document.getElementById("finalized-list").style.display = "none";
+    });
 });

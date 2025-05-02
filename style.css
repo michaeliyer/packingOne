@@ -201,3 +201,34 @@ button:hover {
   font-weight: bold;
   color: #222;
 }
+
+.close-section {
+  background: #eee;
+  color: #333;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  margin-left: 8px;
+  padding: 0;
+}
+.close-section:hover {
+  background: #ff4444;
+  color: #fff;
+}
+
+#toggle-occasions {
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
+}
+#toggle-occasions:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
