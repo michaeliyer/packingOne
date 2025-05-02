@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Packing App</title>
+  </head>
+  <body>
+    <h1>Packing App</h1>
+
+    <!-- Form for adding occasions -->
+    <div id="occasion-form">
+      <input type="text" id="occasion-id" placeholder="Occasion ID" required />
+      <input type="date" id="occasion-date" required />
+      <button id="save-button">Save Occasion</button>
+    </div>
+
+    <!-- Display saved occasions -->
+    <h2>Saved Occasions</h2>
+    <ul id="occasion-list"></ul>
+
+    <!-- Finalized Packing List Section -->
+    <div id="finalized-list" style="display: none">
+      <h2 id="finalized-title"></h2>
+
+      <!-- Add new item form -->
+      <div id="add-item-form">
+        <input type="text" id="item-name" placeholder="Item name" required />
+        <input
+          type="number"
+          id="item-quantity"
+          placeholder="Quantity"
+          required
+          min="1"
+          value="1"
+        />
+        <input type="text" id="item-notes" placeholder="Notes (optional)" />
+        <button id="add-item-button">Add Item</button>
+      </div>
+
+      <ul id="finalized-items"></ul>
+      <button id="save-edits-button" style="margin-top: 10px">
+        Save Edits
+      </button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
