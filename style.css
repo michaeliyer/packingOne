@@ -171,3 +171,15 @@ button:hover {
   color: #666;
   font-style: italic;
 }
+
+.occasion-delete-button {
+  background: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+}

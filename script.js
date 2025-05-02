@@ -62,14 +62,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
       occasions.forEach((occasion) => {
         const li = document.createElement("li");
+        li.style.display = "flex";
+        li.style.alignItems = "center";
+        li.style.gap = "10px";
+
         const link = document.createElement("a");
         link.href = "#";
-
-        // Format the date
         const dateObj = new Date(occasion.date);
         const formattedDate = dateObj.toLocaleDateString();
-
-        // Create the occasion display text
         link.textContent = `${occasion.id} - ${formattedDate}`;
         if (occasion.notes) {
           const notesSpan = document.createElement("span");
@@ -77,9 +77,36 @@ document.addEventListener("DOMContentLoaded", function () {
           notesSpan.textContent = ` (${occasion.notes})`;
           link.appendChild(notesSpan);
         }
-
         link.addEventListener("click", () => showFinalizedList(occasion));
+
+        // Delete button
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "🗑️";
+        deleteBtn.className = "occasion-delete-button";
+        deleteBtn.title = "Delete this occasion";
+        deleteBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          if (
+            confirm(
+              `Are you sure you want to delete occasion "${occasion.id}"?`
+            )
+          ) {
+            const delTransaction = db.transaction(["occasions"], "readwrite");
+            const delStore = delTransaction.objectStore("occasions");
+            delStore.delete(occasion.id).onsuccess = function () {
+              displayOccasions();
+              // Optionally hide the finalized list if it was showing this occasion
+              if (currentOccasion && currentOccasion.id === occasion.id) {
+                document.getElementById("finalized-list").style.display =
+                  "none";
+              }
+            };
+          }
+        });
+
         li.appendChild(link);
+        li.appendChild(deleteBtn);
         list.appendChild(li);
       });
     };
