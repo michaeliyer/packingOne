@@ -25,13 +25,14 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("save-button").addEventListener("click", function () {
     const id = document.getElementById("occasion-id").value.trim();
     const date = document.getElementById("occasion-date").value;
+    const notes = document.getElementById("occasion-notes").value.trim();
 
     if (!id || !date) {
       alert("Please fill in both ID and date.");
       return;
     }
 
-    saveOccasion({ id, date });
+    saveOccasion({ id, date, notes });
   });
 
   function saveOccasion(occasion) {
@@ -63,7 +64,20 @@ document.addEventListener("DOMContentLoaded", function () {
         const li = document.createElement("li");
         const link = document.createElement("a");
         link.href = "#";
-        link.textContent = `ID: ${occasion.id}`;
+
+        // Format the date
+        const dateObj = new Date(occasion.date);
+        const formattedDate = dateObj.toLocaleDateString();
+
+        // Create the occasion display text
+        link.textContent = `${occasion.id} - ${formattedDate}`;
+        if (occasion.notes) {
+          const notesSpan = document.createElement("span");
+          notesSpan.className = "occasion-notes";
+          notesSpan.textContent = ` (${occasion.notes})`;
+          link.appendChild(notesSpan);
+        }
+
         link.addEventListener("click", () => showFinalizedList(occasion));
         li.appendChild(link);
         list.appendChild(li);
@@ -77,9 +91,20 @@ document.addEventListener("DOMContentLoaded", function () {
     // Display the finalized list
     const finalizedList = document.getElementById("finalized-list");
     finalizedList.style.display = "block";
+
+    // Format the date
+    const dateObj = new Date(occasion.date);
+    const formattedDate = dateObj.toLocaleDateString();
+
+    // Update title and details
     document.getElementById(
       "finalized-title"
-    ).textContent = `Packing list for ID ${occasion.id}`;
+    ).textContent = `Packing List For Occasion #${occasion.id}`;
+    const detailsElement = document.getElementById("occasion-details");
+    detailsElement.textContent = `Date: ${formattedDate}`;
+    if (occasion.notes) {
+      detailsElement.textContent += ` | Notes: ${occasion.notes}`;
+    }
 
     refreshItemsList();
   }
@@ -88,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const list = document.getElementById("finalized-items");
     list.innerHTML = "";
 
-    // Populate items with checkbox, quantity, notes, and delete button for editing
+    // Populate items with checkbox, quantity and notes for editing
     currentOccasion.items.forEach((item, index) => {
       const li = document.createElement("li");
 
@@ -113,7 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Create delete button
       const deleteButton = document.createElement("button");
-      deleteButton.textContent = "×"; // Using × symbol for delete
+      deleteButton.textContent = "×";
       deleteButton.className = "delete-button";
       deleteButton.dataset.index = index;
       deleteButton.addEventListener("click", function () {
@@ -137,6 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
 
+      // Append all elements in the desired order
       li.appendChild(checkbox);
       li.appendChild(label);
       li.appendChild(quantityInput);
