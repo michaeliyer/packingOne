@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (occasion.notes) {
           const notesSpan = document.createElement("span");
           notesSpan.className = "occasion-notes";
-          notesSpan.textContent = ` (${occasion.notes})`;
+          notesSpan.innerHTML = ` (Notes: <strong>${occasion.notes}</strong>)`;
           link.appendChild(notesSpan);
         }
         link.addEventListener("click", () => showFinalizedList(occasion));
@@ -128,9 +128,9 @@ document.addEventListener("DOMContentLoaded", function () {
       "finalized-title"
     ).textContent = `Packing List For Occasion #${occasion.id}`;
     const detailsElement = document.getElementById("occasion-details");
-    detailsElement.textContent = `Date: ${formattedDate}`;
+    detailsElement.innerHTML = `Date: ${formattedDate}`;
     if (occasion.notes) {
-      detailsElement.textContent += ` | Notes: ${occasion.notes}`;
+      detailsElement.innerHTML += ` | Notes: <strong>${occasion.notes}</strong>`;
     }
 
     refreshItemsList();
